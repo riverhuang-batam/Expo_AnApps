@@ -11,7 +11,7 @@ const AuthNavigator = () => {
               headerShown: false
             }}/> 
             <Stack.Screen name="ListDetailScreen" component={ListDetailScreen} options={{
-              headerShown: false
+              headerTransparent: true
             }}/> 
           </Stack.Navigator> 
     )

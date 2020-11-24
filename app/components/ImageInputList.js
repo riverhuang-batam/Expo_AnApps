@@ -6,7 +6,7 @@ const ImageInputList = ({imageUris = [], onRemoveImage, onAddImage}) => {
     <View>
         {imageUris.map((uri) => (
             <View key={uri}>
-                <ImageInput imageUri={uri} onChangeImage={() => onRemoveImage()}/>
+                <ImageInput imageUri={uri} onChangeImage={(uri) => onRemoveImage(uri)}/>
             </View>
         ))}
         <ImageInput onChangeImage={(uri) => onAddImage(uri)}/>

@@ -3,7 +3,7 @@ import {View, StyleSheet, Image, TouchableWithoutFeedback, Alert} from 'react-na
 import colors from '../config/colors'
 import * as ImagePicker from 'expo-image-picker'
 import {MaterialCommunityIcons} from '@expo/vector-icons'
-const ImageInput = ({imageUris}) => {
+const ImageInput = ({imageUri, onChangeImage}) => {
     
     const requestPermission = async() => {
         try {
@@ -20,9 +20,9 @@ const ImageInput = ({imageUris}) => {
         requestPermission()
     }, [])  
     const handlePress = async() => {
-        if(!imageUris) selectImage()
+        if(!imageUri) selectImage()
         else Alert.alert('Delete', 'Are you sure you want to delete this image', [
-            {text: 'Yes', onPress: () => {}}
+            {text: 'Yes', onPress: () => onChangeImage(imageUri)}
         ])
     }
     const selectImage = async() => {
@@ -30,13 +30,16 @@ const ImageInput = ({imageUris}) => {
             mediaTypes: ImagePicker.MediaTypeOptions.images,
             quality: 0.5
         })
-        setImageUri(result.uri)
+        if(result){
+            onChangeImage(result.uri)
+        }
     }
+    // console.log(imageUris)
     return(
         <TouchableWithoutFeedback onPress={handlePress}>
         <View style={styles.container}>
-            {!imageUris && <MaterialCommunityIcons color={colors.medium} name="camera" size={40}/>}
-            {imageUris && <Image source={{uri: imageUris}} style={styles.image}/>}
+            {!imageUri && <MaterialCommunityIcons color={colors.medium} name="camera" size={40}/>}
+            {imageUri && <Image source={{uri: imageUri}} style={styles.image}/>}
         </View>
         </TouchableWithoutFeedback>
     )
@@ -49,7 +52,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         height: 100,
         width: 100,
-        overflow: "hidden"
+        overflow: "hidden",
     },
     image:{
         backgroundColor: colors.light,
