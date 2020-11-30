@@ -12,7 +12,7 @@ import axios from 'axios'
 const ListDetailScreen = ({route, navigation}) => {
     const authContext = useContext(AuthContext)
     const list = route.params
-    const postedByInfo = list.postedById && jwt_decode(list.postedById)
+    const postedByInfo = list.postedById 
     console.log(list)
     const deletePost = () => {
         axios.delete(`${SERVER_URI}pets/${list._id}`)
@@ -26,13 +26,15 @@ const ListDetailScreen = ({route, navigation}) => {
             <AppText>{list.petName}</AppText>
             <AppText>{list.price}</AppText>
             <AppText>{list.description}</AppText>
-            <ListItem
+            {/* <ListItem
                 title={postedByInfo.username}
                 subTitle={postedByInfo.email}
-            />
+            /> */}
             {list.PostedById === authContext.userId ?
-            
+            <>
                 <Button title="delete" onPress={deletePost} />
+                <Button title="update" onPress={navigation.navigate('ListUpdateScreen', list)} />
+                </>
                 :
                 <Button title="Add to Cart" />
             

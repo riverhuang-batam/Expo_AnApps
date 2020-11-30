@@ -1,6 +1,6 @@
 import React from 'react'
 import {View, StyleSheet, TextInput} from 'react-native'
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
+import {MaterialCommunityIcons} from '@expo/vector-icons/'
 import colors from '../config/colors'
 const AppTextInput = ({value, icon, placeholder, ...otherProps}) => {
     return(

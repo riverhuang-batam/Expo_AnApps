@@ -12,14 +12,25 @@ import OfflineNotice from "./app/components/OfflineNotice";
 import AuthContext from './app/auth/context'
 import {SERVER_URI} from 'react-native-dotenv'
 import {getPetList} from './app/api/api'
+import authStorage from './app/auth/storage'
+import { AppLoading } from "expo";
 const Stack = createStackNavigator();
 const App = () => {
   const [user, setUser] = useState()
+  const [isReady, setIsReady] = useState(false)
+  const restoreUser = async() => {
+    const user = await authStorage.getUser();
+    if(user) setUser(user)
+  }
   useEffect(() => {
-    console.log(SERVER_URI)
-    // getPetList()
-    console.log(user)
-  }, [user])
+    // restoreUser()
+  }, [])
+
+  if(!isReady){
+    return(
+      <AppLoading startAsync={restoreUser} onFinish={() => setIsReady(true)}/>
+    )
+  }
   return (
     <AuthContext.Provider value={{user, setUser}}>
     <OfflineNotice/>

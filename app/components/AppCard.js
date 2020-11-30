@@ -15,8 +15,10 @@ const AppCard = ({title, subTitle, price, imageUrl, onPress}) => {
             
             {/* <AppSlider images={imageArray}/> */}
             {/* <Image source={require(`${imageUrl}`)}/> */}
+            <View style={styles.container}>
             <AppText style={styles.title}>{title}</AppText>
             <AppText>{price}</AppText>
+            </View>
         </View>
         </TouchableWithoutFeedback>
     )
@@ -26,6 +28,9 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: colors.white,
         marginBottom: 20,
+        overflow: "hidden"
+    },
+    container:{
         padding: 15
     },
     image: {

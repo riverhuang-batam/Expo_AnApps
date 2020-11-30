@@ -12,10 +12,12 @@ import Screens from '../components/Screens'
 const ListScreen = ({navigation}) => {
     const [lists, setLists] = useState([])
     const [loading, setLoading] = useState(false)
-
+    const [refreshing, setRefreshing] = useState(false)
     const getPetList = () => {
+        setLoading(true)
         axios.get(`${SERVER_URI}pets`)
         .then(lists => setLists(lists.data.pet))
+        .then(() => setLoading(false))
         .catch(err => console.log(err))
     }
     // const deletePetList = (petId) => {
@@ -26,26 +28,26 @@ const ListScreen = ({navigation}) => {
     useEffect(() => {
         // setLists(ListingApi.getPetList().then(data => setLists(data)))
         // console.log(lists, 'dat==================')
-        
+        console.log(lists)
         getPetList()
         // console.log(lists)
-    }, [lists])
+    }, [refreshing])
     // console.log(lists)
     return(
         
             <View style={styles.container}>
-                
             {/* <View style={styles.personalContainer}> */}
             <Screens>
+            {loading && <ActivityIndicator size="large" color="#00ff00" /> }
                 <FlatList 
                     data={lists}
                     keyExtractor={listing => listing._id}
-                    
+                    refreshing={refreshing}
+                    onRefresh={() => getPetList()}
                     renderItem={({item}) =>  
-                        <AppCard title={item.petName} price={item.price} imageUrl={item.petImages} onPress={() => navigation.navigate('ListDetailScreen', item)}/>                    
+                        <AppCard title={item.petName} price={item.price} imageUrl={item.petImages} onPress={() => navigation.navigate('ListDetailScreen', item)}/>
                     }
                 />
-
             </Screens>
             </View>
         

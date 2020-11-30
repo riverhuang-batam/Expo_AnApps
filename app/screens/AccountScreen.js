@@ -5,12 +5,21 @@ import ListItemSeparator from "../components/lists/ListItemSeparator";
 import AppIcon from "../components/AppIcon";
 import colors from "../config/colors";
 import Screens from "../components/Screens";
-import AuthContext from '../auth/context'
+import AuthContext from '../auth/context';
+import useAuth from '../auth/useAuth'
 const menuItems = [
   {
-    title: "My Listing",
+    title: "Listing",
     icon: {
       name: "format-list-bulleted",
+      backgroundColor: colors.primary,
+      color: colors.white,
+    },
+  },
+  {
+    title: "Settings",
+    icon: {
+      name: "settings",
       backgroundColor: colors.primary,
       color: colors.white,
     },
@@ -27,6 +36,7 @@ const menuItems = [
 ];
 const AccountScreen = ({}) => {
   const authContext = useContext(AuthContext)
+  const auth = useAuth()
   console.log(authContext)
   return (
     <Screens style={styles.screen}>
@@ -36,7 +46,7 @@ const AccountScreen = ({}) => {
       <View style={styles.container}>
         <FlatList
           data={menuItems}
-          keyExtractor={(item) => item.length}
+          keyExtractor={(item) => item.title}
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
             <ListItem
@@ -48,7 +58,7 @@ const AccountScreen = ({}) => {
           )}
         />
         <View style={styles.container}>
-          <ListItem title="Logout" onPress={() => console.log('test')} IconComponent={<AppIcon name="logout" backgroundColor="red" />}/>
+          <ListItem title="Logout" onPress={() => auth.logOut()} IconComponent={<AppIcon name="logout" backgroundColor="red" />}/>
         </View>
         <View style={styles.container}>
           <ListItem subTitle="Version 0.0.1" />

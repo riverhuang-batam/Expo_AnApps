@@ -30,7 +30,7 @@ const ImageInput = ({imageUri, onChangeImage}) => {
             mediaTypes: ImagePicker.MediaTypeOptions.images,
             quality: 0.5
         })
-        if(result){
+        if(!result.cancelled){
             onChangeImage(result.uri)
         }
     }
