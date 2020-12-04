@@ -14,7 +14,10 @@ import {SERVER_URI} from 'react-native-dotenv'
 import {getPetList} from './app/api/api'
 import authStorage from './app/auth/storage'
 import { AppLoading } from "expo";
+import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
+
 const Stack = createStackNavigator();
+// const colorScheme = useColorScheme();
 const App = () => {
   const [user, setUser] = useState()
   const [isReady, setIsReady] = useState(false)
@@ -22,6 +25,7 @@ const App = () => {
     const user = await authStorage.getUser();
     if(user) setUser(user)
   }
+  
   useEffect(() => {
     // restoreUser()
   }, [])

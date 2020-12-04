@@ -13,7 +13,7 @@ import { SERVER_URI } from "react-native-dotenv";
 import Screens from "../components/Screens";
 import AuthContext from "../auth/context";
 import UploadScreen from "../screens/UploadScreen";
-import { NavigationContainer } from "@react-navigation/native";
+
 
 const validationSchema = Yup.object().shape({
   petImages: Yup.array().min(1, "Please select at least 1 image"),
@@ -59,7 +59,10 @@ const AddPetScreen = ({navigation}) => {
       .catch((err) => console.log(err));
 
   };
-
+// const onDoneAnimation = async() => {
+//   const uploadAnimation = await 
+  
+// }
   useEffect(() => {
     console.log(imageUris);
   }, [imageUris]);

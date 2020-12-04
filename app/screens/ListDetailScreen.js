@@ -1,12 +1,10 @@
 import React, {useContext} from 'react'
-import {View, StyleSheet, Button} from 'react-native'
+import {View, StyleSheet, Button, AsyncStorage} from 'react-native'
 import AppText from '../components/AppText'
 import AppSlider from '../components/AppSlider'
 import colors from '../config/colors'
-import ListItem from '../components/lists/ListItem'
 import Screens from '../components/Screens'
 import AuthContext from '../auth/context'
-import jwt_decode from 'jwt-decode'
 import {SERVER_URI} from 'react-native-dotenv'
 import axios from 'axios'
 const ListDetailScreen = ({route, navigation}) => {
@@ -19,6 +17,13 @@ const ListDetailScreen = ({route, navigation}) => {
         .then(() => navigation.navigate('ListScreen'))
         .catch(err => console.log(err))
     }
+    const storeItem = async(value) => {
+        const result = await AsyncStorage.setItem("keys", JSON.stringify(value));
+        if(result){
+            console.log(result)
+        }
+    
+      };
     return(
         <View style={styles.container}>
             <AppSlider images={list.petImages.map(petImage => petImage.path)} />
@@ -30,14 +35,14 @@ const ListDetailScreen = ({route, navigation}) => {
                 title={postedByInfo.username}
                 subTitle={postedByInfo.email}
             /> */}
-            {list.PostedById === authContext.userId ?
+            {console.log(list.postedById === authContext.userId, '=========================================')}
+            {list.postedById === authContext.userId ?
             <>
                 <Button title="delete" onPress={deletePost} />
-                <Button title="update" onPress={navigation.navigate('ListUpdateScreen', list)} />
+                <Button title="update" onPress={() => navigation.navigate('ListUpdateScreen', list)} />
                 </>
                 :
-                <Button title="Add to Cart" />
-            
+                <Button title="Add to Cart" onPress={() => storeItem(list)}/>
             }
             </Screens>
         </View>

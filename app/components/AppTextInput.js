@@ -2,7 +2,7 @@ import React from 'react'
 import {View, StyleSheet, TextInput} from 'react-native'
 import {MaterialCommunityIcons} from '@expo/vector-icons/'
 import colors from '../config/colors'
-const AppTextInput = ({value, icon, placeholder, ...otherProps}) => {
+const AppTextInput = ({icon, placeholder, ...otherProps}) => {
     return(
         <View style={styles.textInput}>
             {icon && <MaterialCommunityIcons style={styles.icon} name={icon} size={25} color={colors.medium}/>}

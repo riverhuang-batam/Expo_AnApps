@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react'
-import {View, FlatList, StyleSheet, Button} from 'react-native'
+import {View, FlatList, StyleSheet, Button, AsyncStorage} from 'react-native'
 import Screens from '../components/Screens'
 import ListItem from '../components/lists/ListItem'
 
@@ -11,7 +11,7 @@ import {STRIPE_PUBLISHABLE_KEY} from 'react-native-dotenv'
 const CartLists = [
     {
       id: 1, 
-        title: "chihuahua",
+        title: "tester",
         price: 8,
         location: 'batam center',
         image: require('../../assets/logo.png')
@@ -25,7 +25,7 @@ const CartLists = [
     },
     {
       id: 3, 
-        title: "chihuahua",
+        title: "test",
         price: 8,
         location: 'batam center',
         image: require('../../assets/logo.png')
@@ -33,6 +33,14 @@ const CartLists = [
   ];
 const CartScreen = () => {
   const [openCheckout, setOpenCheckout] = useState(false)
+  const getItem = async() => {
+
+    const result = await AsyncStorage.getItem("keys");
+    if(result){
+        console.log([JSON.parse(result)])
+    }
+    return [JSON.parse(result)]
+  };
     const cost = 0
     const onPaymentSuccess = (token) => {
         // send the stripe token to your backend!
@@ -68,17 +76,20 @@ const CartScreen = () => {
     return(
       <>
       <AppText>Cart</AppText>
+      <Button title="test get" onPress={() => getItem()}/>
       <FlatList
-      data={CartLists}
-      keyExtractor={(item) => item.title}
+      data={getItem()}
+      keyExtractor={(item, index) => index.toString()}
       ItemSeparatorComponent={ListItemSeparator}
-      renderItem={({ item }) => (
+      renderItem={({ item }) => 
+      (
         <ListItem
           title={item.title}
           subTitle={item.price}
           image={item.image}
         />
-      )}
+      )
+    }
     />
     <Button title="Pay" onPress={onOpen}/>
     </>

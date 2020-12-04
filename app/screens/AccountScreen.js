@@ -10,6 +10,7 @@ import useAuth from '../auth/useAuth'
 const menuItems = [
   {
     title: "Listing",
+    targetScreen: "Messages",
     icon: {
       name: "format-list-bulleted",
       backgroundColor: colors.primary,
@@ -18,6 +19,7 @@ const menuItems = [
   },
   {
     title: "Settings",
+    targetScreen: "Setting",
     icon: {
       name: "settings",
       backgroundColor: colors.primary,
@@ -26,15 +28,15 @@ const menuItems = [
   },
   {
     title: "Messages",
+    targetScreen: "Messages",
     icon: {
       name: "email",
       backgroundColor: colors.secondary,
       color: colors.white,
     },
-    targetScreen: "Messages",
   },
 ];
-const AccountScreen = ({}) => {
+const AccountScreen = ({navigation}) => {
   const authContext = useContext(AuthContext)
   const auth = useAuth()
   console.log(authContext)
@@ -50,6 +52,7 @@ const AccountScreen = ({}) => {
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
             <ListItem
+            onPress={() => navigation.navigate(item.targetScreen)}
               title={item.title}
               IconComponent={
                 <AppIcon name={item.icon.name} backgroundColor="red" />

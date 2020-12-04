@@ -35,11 +35,13 @@ const ImageInput = ({imageUri, onChangeImage}) => {
         }
     }
     // console.log(imageUris)
+    {console.log(imageUri, 'tettttttttttttttttttttttttttttttttttttttttttt')}
     return(
         <TouchableWithoutFeedback onPress={handlePress}>
         <View style={styles.container}>
             {!imageUri && <MaterialCommunityIcons color={colors.medium} name="camera" size={40}/>}
-            {imageUri && <Image source={{uri: imageUri}} style={styles.image}/>}
+            {imageUri && <Image source={{uri: imageUri.path === undefined ? imageUri : imageUri.path }} style={styles.image}/> }
+            
         </View>
         </TouchableWithoutFeedback>
     )

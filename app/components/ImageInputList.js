@@ -4,8 +4,8 @@ import ImageInput from './ImageInput'
 const ImageInputList = ({imageUris = [], onRemoveImage, onAddImage}) => {
     return(    
     <View style={styles.container}>
-        {imageUris.map((uri) => (
-            <View key={uri} style={styles.image} >
+        {imageUris.map((uri, index) => (
+            <View key={index} style={styles.image} >
                 <ImageInput imageUri={uri} onChangeImage={(uri) => onRemoveImage(uri)}/>
             </View>
         ))}

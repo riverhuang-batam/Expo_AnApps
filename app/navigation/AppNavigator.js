@@ -8,6 +8,7 @@ import AddPetScreen from '../screens/AddPetScreen'
 import AccountScreen from '../screens/AccountScreen'
 import CartScreen from '../screens/CartScreen'
 import FeedNavigator from '../navigation/FeedNavigator'
+import AccountNavigator from '../navigation/AccountNavigator'
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => {
     return(
@@ -32,7 +33,7 @@ const AppNavigator = () => {
                     <MaterialCommunityIcons name="plus" color={color} size={size}/>
                 )
             }} />
-            <Tab.Screen name="Account" component={AccountScreen} options={{
+            <Tab.Screen name="Account" component={AccountNavigator} options={{
                 tabBarIcon: ({color, size}) => (
                     <MaterialCommunityIcons name="account" color={color} size={size}/>
                 )

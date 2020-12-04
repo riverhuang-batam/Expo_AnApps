@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Image, StyleSheet } from "react-native";
+import { View, Image, StyleSheet, Alert } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../components/AppButton";
 import AppTextInput from "../components/AppTextInput";
@@ -7,6 +7,8 @@ import { AppForm, AppFormField, SubmitButton } from "../components/forms/";
 import axios from "axios";
 import { SERVER_URI } from "react-native-dotenv";
 import Screens from "../components/Screens";
+import Toast from 'react-native-toast-message';
+
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(4).label("Username"),
   email: Yup.string().required().email().label("Email"),
@@ -23,10 +25,26 @@ const RegisterScreen = ({navigation}) => {
         email: values.email,
         password: values.password,
       })
-      .then(() => navigate.navigation("LoginScreen"))
+      .then(() => {
+        
+        // Toast.show({
+        //   // type: 'success | error | info',
+        //   position: 'top | bottom',
+        //   text1: 'Hello',
+        //   text2: 'This is some something 👋',
+        //   visibilityTime: 4000,
+        //   autoHide: true,
+        //   topOffset: 30,
+        //   bottomOffset: 40,
+        //   // onShow: () => {},
+        //   // onHide: () => {}
+        // })
+        navigation.navigate("LoginScreen")
+      })
+      .then(() => alert('Register Success'))
       .catch((err) => console.log(err));
   };
-
+ 
   return (
     <Screens>
       <AppForm
