@@ -45,7 +45,7 @@ const ListScreen = ({navigation}) => {
                     refreshing={refreshing}
                     onRefresh={() => getPetList()}
                     renderItem={({item}) =>  
-                        <AppCard title={item.petName} price={item.price} imageUrl={item.petImages} onPress={() => navigation.navigate('ListDetailScreen', item)}/>
+                        <AppCard title={item.petName} price={`${item.price}$`} imageUrl={item.petImages} onPress={() => navigation.navigate('ListDetailScreen', item)}/>
                     }
                 />
             </Screens>

@@ -12,7 +12,7 @@ import AccountNavigator from '../navigation/AccountNavigator'
 const Tab = createBottomTabNavigator();
 const AppNavigator = () => {
     return(
-        <Tab.Navigator>
+        <Tab.Navigator >
             <Tab.Screen name="Feed" component={FeedNavigator} options={{
                 tabBarIcon: ({color, size}) => (
                     <MaterialCommunityIcons name="home" color={color} size={size}/>

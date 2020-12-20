@@ -6,7 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/an-apps-logo.png",
     "splash": {
-      "image": "./assets/an-apps-logo.png",
+      "image": "./assets/an-apps-logo-splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

@@ -1,9 +1,12 @@
 import React from "react";
-import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
+import { View, StyleSheet, Image, TouchableHighlight, Button } from "react-native";
 import AppText from "../AppText";
 import colors from "../../config/colors";
-const ListItem = ({ title, subTitle, image, IconComponent, onPress }) => {
+import AppIcon from '../../components/AppIcon'
+const ListItem = ({ title, subTitle, image, IconComponent, onPress, ListButton, onPressButton }) => {
+  // console.log(image)
   return (
+    <>
     <TouchableHighlight onPress={onPress} underlayColor={colors.light}>
     <View style={styles.container}>
       {IconComponent}
@@ -12,14 +15,19 @@ const ListItem = ({ title, subTitle, image, IconComponent, onPress }) => {
         <AppText style={styles.title}>{title}</AppText>
         {subTitle && <AppText style={styles.subTitle}>{subTitle}</AppText>}
       </View>
+      <View style={{display: 'flex', alignItems:"flex-end"}}>
+    {onPressButton && <AppIcon style={{marginLeft: 'auto'}} name="trash-can" iconColor={colors.medium} size={60} onPress={onPressButton}/>}
+    </View>
     </View>
     </TouchableHighlight>
+    </>
   );
 };
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     padding: 5
+    
   },
   detailsContainer:{
       flexDirection: "column",

@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, StyleSheet} from 'react-native'
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
-const AppIcon = ({name, size = 40, backgroundColor, iconColor="white"}) => {
+const AppIcon = ({name, size = 40, backgroundColor, iconColor="white", onPress, ...otherProps}) => {
     return(
         <View style={{
             width: size,
@@ -11,7 +11,7 @@ const AppIcon = ({name, size = 40, backgroundColor, iconColor="white"}) => {
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <MaterialCommunityIcons name={name} size={size * 0.5} color={iconColor}/>
+            <MaterialCommunityIcons name={name} size={size * 0.5} color={iconColor} onPress={onPress} {...otherProps}/>
         </View>
     )
 }

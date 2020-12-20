@@ -1,12 +1,12 @@
 import React from 'react'
-import { ActivityIndicator, View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import LottieView from 'lottie-react-native'
 import colors from '../config/colors'
-const AppActivityIndicator = ({visible = false}) => {
+const ActivityIndicatorLottieView = ({visible = false}) => {
     if(!visible) return null
     return(
         <View style={styles.overlay}>
-            <ActivityIndicator visible={visible} color={colors.primary}/>
+            <LottieView autoPlay loop source={require('../../assets/loading.json')} />
         </View>
     )
 }
@@ -20,4 +20,4 @@ const styles = StyleSheet.create({
         height: '100%',
     }
 })
-export default AppActivityIndicator;
+export default ActivityIndicatorLottieView;

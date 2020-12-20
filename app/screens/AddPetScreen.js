@@ -16,11 +16,11 @@ import UploadScreen from "../screens/UploadScreen";
 
 
 const validationSchema = Yup.object().shape({
-  petImages: Yup.array().min(1, "Please select at least 1 image"),
   description: Yup.string().required().label("Description"),
   petName: Yup.string().required().label("PetName"),
   price: Yup.number().required().label("Price"),
   quantity: Yup.number().required().label("Quantity"),
+  petImages: Yup.array().min(1, "Please select at least 1 image"),
   // location: Yup.string().required().label("Location"),
 });
 
@@ -28,13 +28,13 @@ const AddPetScreen = ({navigation}) => {
   const [imageUris, setImageUris] = useState([]);
   const [uploadProgress, setUploadProgress] = useState()
   const [uploadVisible, setUploadVisible] = useState(false);
+  const [routeId, setRouteId ] = useState('')
   const authContext = useContext(AuthContext);
   const config = {
     headers: { "Content-Type": "multipart/form-data" },
     onUploadProgress: (progressEvent) => setUploadProgress(progressEvent.loaded / progressEvent.total),
   };
   const postPet = async(values) => {
-    //   console.log(values)
     setUploadProgress(0)
     setUploadVisible(true);
     const fd = new FormData();
@@ -55,20 +55,23 @@ const AddPetScreen = ({navigation}) => {
 
     axios
       .post(`${SERVER_URI}pets`, fd, config)
-      .then((result) => navigation.navigate("ListDetailScreen",result.data,petId))
+      .then((result) => setRouteId(result.data.createdPet))
       .catch((err) => console.log(err));
-
   };
-// const onDoneAnimation = async() => {
-//   const uploadAnimation = await 
   
-// }
+const onDoneAnimation = async(value) => {
+  await setUploadVisible(false)
+  // console.log(value, '========================')
+  if(value){
+    navigation.navigate("ListDetailScreen", value)
+  }
+}
   useEffect(() => {
-    console.log(imageUris);
+    
   }, [imageUris]);
   return (
     <Screens>
-      <UploadScreen onDone={() => setUploadVisible(false)} visible={uploadVisible} progress={uploadProgress}/>
+      <UploadScreen onDone={() => onDoneAnimation(routeId)} visible={uploadVisible} progress={uploadProgress}/>
       <AppForm
         initialValues={{
           petImages: [],

@@ -25,6 +25,7 @@ const ListUpdateScreen = ({route, navigation}) => {
     const [imageUris, setImageUris] = useState([]);
     const [uploadProgress, setUploadProgress] = useState()
     const [uploadVisible, setUploadVisible] = useState(false);
+    const [routeId, setRouteId] = useState()
     const authContext = useContext(AuthContext);
     const list = route.params
     // console.log(route.params.petImages)
@@ -33,38 +34,36 @@ const ListUpdateScreen = ({route, navigation}) => {
       onUploadProgress: (progressEvent) => setUploadProgress(progressEvent.loaded / progressEvent.total),
     };
     const updatePostedPet = async(values) => {
-        console.log(values, '//////////////////////////////////////////////////////////////////////////////////')
-      
       setUploadProgress(0)
       setUploadVisible(true);
       const fd = new FormData();
       values.petImages.map((image, index) =>
-      // console.log(image.path, '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++'),
         fd.append("petImages", {
           name: "image" + index,
           type: "image/jpeg",
           uri: image.path ? image.path : image,
         })
       );
-      // fd.append("images", );
+      
       fd.append("petName", values.petName);
       fd.append("description", values.description);
       fd.append("price", values.price);
       fd.append("quantity", values.quantity);
-      
-      
-  
       axios
         .put(`${SERVER_URI}pets/${route.params._id}`, fd, config)
-        .then((result) => navigation.navigate("ListDetailScreen",result.data,petId))
+        .then((result) => setRouteId(result.data.result))
         .catch((err) => console.log(err, '================================================='));
   
     };
+    const onDoneAnimation = async()  => {
+      await setUploadVisible(false)
+      navigation.navigate("ListDetailScreen", routeId)
+    }
     return(
         <>
         
         <Screens>
-      <UploadScreen onDone={() => setUploadVisible(false)} visible={uploadVisible} progress={uploadProgress}/>
+      <UploadScreen onDone={onDoneAnimation} visible={uploadVisible} progress={uploadProgress}/>
       <AppForm
         initialValues={{
           petImages: route.params.petImages,
@@ -86,6 +85,7 @@ const ListUpdateScreen = ({route, navigation}) => {
         <AppFormField
           name="description"
           placeholder="Description"
+          multiline
           icon="card-text"
           autoCapitalize="none"
         />
@@ -102,6 +102,7 @@ const ListUpdateScreen = ({route, navigation}) => {
           keyboardType="number-pad"
           icon="format-list-numbered-rtl"
           autoCapitalize="none"
+          
         />
         {/* <AppFormField
           name="address"
@@ -110,7 +111,7 @@ const ListUpdateScreen = ({route, navigation}) => {
           autoCapitalize="none"
         /> */}
         {/* <AppTextInput placeholder="Location"/> */}
-        <SubmitButton title="POST" />
+        <SubmitButton title="UPDATE" />
         {/* <AppButton onPress={() => postPet(imageUris)}>Post</AppButton> */}
       </AppForm>
     </Screens>

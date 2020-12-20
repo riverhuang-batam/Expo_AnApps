@@ -1,18 +1,18 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 
-const AppButton = ({ children, style, onPress }) => {
+const AppButton = ({ title, children, style, onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
     <View style={[styles.buttons, style]}>
-      <Text style={styles.text}>{children}</Text>
+  <Text style={styles.text}>{children}{title}</Text>
     </View>
     </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({
   buttons: {
-    backgroundColor: "green",
+    backgroundColor: "#6DC57C",
     borderRadius: 25,
     justifyContent: "center",
     alignItems: "center",
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   },
   text: {
       color: 'white',
-      fontSize: 20
+      fontSize: 18
   }
 });
 export default AppButton;

@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: "center",
         alignItems: 'center',
-        backgroundColor: colors.primary,
+        backgroundColor: colors.danger,
     },
     Text: {
         color: colors.white

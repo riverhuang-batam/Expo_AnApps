@@ -1,24 +1,28 @@
-import React from "react";
-import { View, Image, StyleSheet, Alert } from "react-native";
+import React, {useContext} from "react";
+import { View, Image, StyleSheet, Button, Alert, KeyboardAvoidingView } from "react-native";
 import * as Yup from "yup";
 import AppButton from "../components/AppButton";
 import AppTextInput from "../components/AppTextInput";
+import ActivityIndicatorLottieView from '../components/ActivityIndicatorLottieView'
 import { AppForm, AppFormField, SubmitButton } from "../components/forms/";
 import axios from "axios";
 import { SERVER_URI } from "react-native-dotenv";
 import Screens from "../components/Screens";
-import Toast from 'react-native-toast-message';
+import AuthContext from '../auth/context'
+import Toast from '../components/Toast'
+import colors from "../config/colors";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required().min(4).label("Username"),
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().min(6).label("Password"),
 });
-
 const RegisterScreen = ({navigation}) => {
+  const {loading, setLoading, toast, setToast, toastShow, setToastShow} = useContext(AuthContext)
+
   const registerSubmit = (values) => {
-    console.log(values);
-    console.log("test");
+    // console.log(values);
+    // console.log("test");
     axios
       .post(`${SERVER_URI}user/signup`, {
         username: values.username,
@@ -26,27 +30,23 @@ const RegisterScreen = ({navigation}) => {
         password: values.password,
       })
       .then(() => {
-        
-        // Toast.show({
-        //   // type: 'success | error | info',
-        //   position: 'top | bottom',
-        //   text1: 'Hello',
-        //   text2: 'This is some something 👋',
-        //   visibilityTime: 4000,
-        //   autoHide: true,
-        //   topOffset: 30,
-        //   bottomOffset: 40,
-        //   // onShow: () => {},
-        //   // onHide: () => {}
-        // })
         navigation.navigate("LoginScreen")
+        
+        Alert.alert('Register Success', 'Your registeration is success try to login')
+        // console.log(toast)
+        // console.log(toastShow, '................................')
       })
-      .then(() => alert('Register Success'))
       .catch((err) => console.log(err));
   };
- 
   return (
+    <>
+      {/* <ActivityIndicatorLottieView visible={true} /> */}
+    
     <Screens>
+      <KeyboardAvoidingView
+behavior='position'
+keyboardVerticalOffset={Platform.OS ===' ios' ? 0 : -85}
+>
       <AppForm
         initialValues={{ email: "", username: "", password: "" }}
         onSubmit={(values) => registerSubmit(values)}
@@ -85,7 +85,12 @@ const RegisterScreen = ({navigation}) => {
         Login
       </AppButton>
       </AppForm>
+      </KeyboardAvoidingView>
+    <Button title="test" onPress={()=>{
+                       setToast(true)
+                    }}/>
     </Screens>
+    </>
   );
 };
 

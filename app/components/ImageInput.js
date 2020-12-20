@@ -35,7 +35,7 @@ const ImageInput = ({imageUri, onChangeImage}) => {
         }
     }
     // console.log(imageUris)
-    {console.log(imageUri, 'tettttttttttttttttttttttttttttttttttttttttttt')}
+    // {console.log(imageUri, 'tettttttttttttttttttttttttttttttttttttttttttt')}
     return(
         <TouchableWithoutFeedback onPress={handlePress}>
         <View style={styles.container}>

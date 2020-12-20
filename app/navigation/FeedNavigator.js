@@ -6,15 +6,21 @@ import ListUpdateScreen from '../screens/ListUpdateScreen'
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
     return(
-          <Stack.Navigator> 
+          <Stack.Navigator screenOptions={{
+            headerTintColor: "white",
+            
+          }}> 
             <Stack.Screen name="ListScreen" component={ListScreen} options={{
               headerShown: false
             }}/> 
             <Stack.Screen name="ListDetailScreen" component={ListDetailScreen} options={{
-              headerTransparent: true
+              headerTransparent: true,
+              headerBackTitleVisible: true,
+              headerTintColor: 'black',
+              title: false
             }}/> 
             <Stack.Screen name="ListUpdateScreen" component={ListUpdateScreen} options={{
-              headerTransparent: true
+              headerShown: false
             }}/> 
           </Stack.Navigator> 
     )

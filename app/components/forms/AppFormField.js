@@ -4,9 +4,9 @@ import ErrorMessage from './ErrorMessage';
 import AppTextInput from '../AppTextInput';
 const AppFormField = ({name, width, ...otherProps}) => {
   const {setFieldValue, values, setFieldTouched, errors, touched} = useFormikContext();
-  // console.log(errors[name])
   
   const capitalized = name.charAt(0).toUpperCase() + name.slice(1)
+  // console.log(capitalized)
   return (
     <>
       <AppTextInput

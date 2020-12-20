@@ -31,7 +31,7 @@ const menuItems = [
     targetScreen: "Messages",
     icon: {
       name: "email",
-      backgroundColor: colors.secondary,
+      backgroundColor: colors.primary,
       color: colors.white,
     },
   },
@@ -52,10 +52,10 @@ const AccountScreen = ({navigation}) => {
           ItemSeparatorComponent={ListItemSeparator}
           renderItem={({ item }) => (
             <ListItem
-            onPress={() => navigation.navigate(item.targetScreen)}
+            // onPress={() => navigation.navigate(item.targetScreen)}
               title={item.title}
               IconComponent={
-                <AppIcon name={item.icon.name} backgroundColor="red" />
+                <AppIcon name={item.icon.name} backgroundColor={item.icon.backgroundColor} />
               }
             />
           )}
