@@ -30,6 +30,7 @@ const LoginScreen = ({ navigation }) => {
   
   const loginSubmit = async(values) => {
     try {
+      console.log(`${SERVER_URI}user/login`)
       setLoading(true)
       const response = await axios.post(`${SERVER_URI}user/login`, { email: values.email, password: values.password })  
       auth.logIn(response.data.token)

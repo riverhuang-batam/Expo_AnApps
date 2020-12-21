@@ -53,7 +53,7 @@ const AddPetScreen = ({navigation}) => {
       fd.append("quantity", values.quantity);
       fd.append("postedById", authContext.user.userId);
       
-        const response = await axios.post(`http://192.168.1.8:9001/pets`, fd, config)
+        const response = await axios.post(`${SERVER_URI}/pets`, fd, config)
         setRouteId(response.data.createdPet)
         authContext.getCart()
     } catch (error) {
