@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { View, FlatList, StyleSheet, Button, AsyncStorage } from "react-native";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
-import Switch from "expo-dark-mode-switch";
 const SettingScreen = () => {
   const [darkMode, setDarkMode] = useState(true);
   const storeItem = async(value) => {
