@@ -14,6 +14,7 @@ const ListScreen = ({navigation}) => {
     const [loading, setLoading] = useState(false)
     const [refreshing, setRefreshing] = useState(false)
     const getPetList = () => {
+        console.log(`${SERVER_URI}pets`)
         setLoading(true)
         axios.get(`${SERVER_URI}pets`)
         .then(lists => setLists(lists.data.pet))

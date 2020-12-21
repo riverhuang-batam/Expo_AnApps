@@ -36,6 +36,7 @@ const AddPetScreen = ({navigation}) => {
   };
   const postPet = async(values) => {
     try {
+      console.log(`${SERVER_URI}pets`)
       setUploadProgress(0)
       setUploadVisible(true);
       const fd = new FormData();
@@ -53,7 +54,7 @@ const AddPetScreen = ({navigation}) => {
       fd.append("quantity", values.quantity);
       fd.append("postedById", authContext.user.userId);
       
-        const response = await axios.post(`${SERVER_URI}/pets`, fd, config)
+        const response = await axios.post(`${SERVER_URI}pets`, fd, config)
         setRouteId(response.data.createdPet)
         authContext.getCart()
     } catch (error) {
