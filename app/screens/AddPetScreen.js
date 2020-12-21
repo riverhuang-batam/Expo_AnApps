@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, KeyboardAvoidingView } from "react-native";
 import {
   AppForm,
   AppFormField,
@@ -35,28 +35,30 @@ const AddPetScreen = ({navigation}) => {
     onUploadProgress: (progressEvent) => setUploadProgress(progressEvent.loaded / progressEvent.total),
   };
   const postPet = async(values) => {
-    setUploadProgress(0)
-    setUploadVisible(true);
-    const fd = new FormData();
-    values.petImages.map((image, index) =>
-      fd.append("petImages", {
-        name: "image" + index,
-        type: "image/jpeg",
-        uri: image,
-      })
-    );
-    // fd.append("images", );
-    fd.append("petName", values.petName);
-    fd.append("description", values.description);
-    fd.append("price", values.price);
-    fd.append("quantity", values.quantity);
-    fd.append("postedById", authContext.user.userId);
-    
-
-    axios
-      .post(`${SERVER_URI}pets`, fd, config)
-      .then((result) => setRouteId(result.data.createdPet))
-      .catch((err) => console.log(err));
+    try {
+      setUploadProgress(0)
+      setUploadVisible(true);
+      const fd = new FormData();
+      values.petImages.map((image, index) =>
+        fd.append("petImages", {
+          name: "image" + index,
+          type: "image/jpeg",
+          uri: image,
+        })
+      );
+      // fd.append("images", );
+      fd.append("petName", values.petName);
+      fd.append("description", values.description);
+      fd.append("price", values.price);
+      fd.append("quantity", values.quantity);
+      fd.append("postedById", authContext.user.userId);
+      
+        const response = await axios.post(`http://192.168.1.8:9001/pets`, fd, config)
+        setRouteId(response.data.createdPet)
+        authContext.getCart()
+    } catch (error) {
+    console.log(error) 
+    }
   };
   
 const onDoneAnimation = async(value) => {
@@ -71,6 +73,11 @@ const onDoneAnimation = async(value) => {
   }, [imageUris]);
   return (
     <Screens>
+      <KeyboardAvoidingView
+behavior='position'
+keyboardVerticalOffset={Platform.OS ===' ios' ? 0 : -85}
+>
+  
       <UploadScreen onDone={() => onDoneAnimation(routeId)} visible={uploadVisible} progress={uploadProgress}/>
       <AppForm
         initialValues={{
@@ -120,6 +127,8 @@ const onDoneAnimation = async(value) => {
         <SubmitButton title="POST" />
         {/* <AppButton onPress={() => postPet(imageUris)}>Post</AppButton> */}
       </AppForm>
+      
+      </KeyboardAvoidingView>
     </Screens>
   );
 };

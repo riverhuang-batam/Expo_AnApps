@@ -5,12 +5,11 @@ import ListItem from "../components/lists/ListItem";
 import ListItemSeparator from "../components/lists/ListItemSeparator";
 import AppText from "../components/AppText";
 import AppButton from "../components/AppButton";
-// import StripeCheckout from "expo-stripe-checkout";
+import StripeCheckout from "expo-stripe-checkout";
 import AuthContext from "../auth/context";
 import { STRIPE_PUBLISHABLE_KEY } from "react-native-dotenv";
-import { BaseRouter } from "@react-navigation/native";
 
-const CartScreen = () => {
+const CartScreen = ({navigation}) => {
   const [openCheckout, setOpenCheckout] = useState(false);
   const { cartData, setCartData, allPrice, setAllPrice, getCart } = useContext(
     AuthContext
@@ -38,56 +37,58 @@ const CartScreen = () => {
 
   const onClose = () => {
     // maybe navigate to other screen here?
-    setOpenCheckout(false);
+    navigation.navigate('cart')
   };
   const onOpen = () => {
     setOpenCheckout(true);
   };
-  useEffect(() => {
-    getCart();
-  }, [setCartData, setAllPrice]);
+
+
   if (openCheckout) {
-    // return (
-    //   <StripeCheckout
-    //     publicKey="pk_test_jI9WR42coQWwTOvCh6zomkYU00AjEam52B"
-    //     amount={allPrice * dollarFormat}
-    //     imageUrl="https://pbs.twimg.com/profile_images/778378996580888577/MFKh-pNn_400x400.jpg"
-    //     storeName="Stripe Checkout"
-    //     description="Test"
-    //     currency="USD"
-    //     allowRememberMe={false}
-    //     prepopulatedEmail="test@test.com"
-    //     onClose={onClose}
-    //     onPaymentSuccess={onPaymentSuccess}
-    //   />
-    // );
-  } else {
+    return (
+      <StripeCheckout
+              publicKey="pk_test_jI9WR42coQWwTOvCh6zomkYU00AjEam52B"
+        amount={allPrice * dollarFormat}
+        imageUrl="https://www.google.com/url?sa=i&url=https%3A%2F%2Fstripe.com%2Fglobal&psig=AOvVaw3YDw30zdTjLSxpJcs4MfTv&ust=1608573947294000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCPC35YiT3e0CFQAAAAAdAAAAABAD"
+        storeName="Stripe Checkout"
+        description="Checkout Test"
+        currency="USD"
+        allowRememberMe={false}
+        prepopulatedEmail="anapps@anapps.com"
+        onClose={onClose}
+        onPaymentSuccess={onPaymentSuccess}
+    />
+ )
+  } else{ 
+    return (
+      <Screens>
+        {AsyncStorage.getItem("cart") && (
+          <FlatList
+            data={cartData}
+            keyExtractor={(item, index) => index.toString()}
+            ItemSeparatorComponent={ListItemSeparator}
+            renderItem={({ item, index }) => {
+              // setCartData(item.price)
+              return (
+                <>
+                  <ListItem
+                    title={item.petName}
+                    subTitle={`$${item.price}`}
+                    image={{ uri: item.petImages[0].path }}
+                    onPressButton={() => deleteCartById(index)}
+                  />
+                </>
+              );
+            }}
+          />
+        )}
+        <AppText style={{textAlign: 'right', fontSize: 25}}>Total: {allPrice}$</AppText>
+        <AppText style={{textAlign: 'center', color: "red", fontSize: 15}}>Test Credit Card 4242 4242 4242 4242*</AppText>
+        <AppButton title="CHECKOUT" disabled={cartData.length > 0 && false} onPress={() => onOpen()} />
+      </Screens>
+    );
   }
-  return (
-    <Screens>
-      {AsyncStorage.getItem("cart") && (
-        <FlatList
-          data={cartData}
-          keyExtractor={(item, index) => index.toString()}
-          ItemSeparatorComponent={ListItemSeparator}
-          renderItem={({ item, index }) => {
-            // setCartData(item.price)
-            return (
-              <>
-                <ListItem
-                  title={item.petName}
-                  subTitle={`$${item.price}`}
-                  image={{ uri: item.petImages[0].path }}
-                  onPressButton={() => deleteCartById(index)}
-                />
-              </>
-            );
-          }}
-        />
-      )}
-      <AppText style={{textAlign: 'right', fontSize: 25}}>Total: {allPrice}$</AppText>
-      <AppButton title="CHECKOUT" onPress={onOpen} />
-    </Screens>
-  );
+  
+  
 };
 export default CartScreen;

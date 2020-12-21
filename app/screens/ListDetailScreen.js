@@ -16,10 +16,14 @@ const ListDetailScreen = ({route, navigation}) => {
     const list = route.params
 
     // console.log(list)
-    const deletePost = () => {
-        axios.delete(`${SERVER_URI}pets/${list._id}`)
-        .then(() => navigation.navigate('ListScreen'))
-        .catch(err => console.log(err))
+    const deletePost = async() => {
+        try {
+            const response = await axios.delete(`${SERVER_URI}pets/${list._id}`)
+            await authContext.getCart()
+            await navigation.navigate('ListScreen')    
+        } catch (error) {
+         console.log(error)   
+        }
     }
     const storeItem = async(value) => {
         const result = await AsyncStorage.getItem('cart')

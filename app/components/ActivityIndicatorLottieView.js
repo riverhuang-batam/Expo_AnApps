@@ -3,6 +3,7 @@ import { View, StyleSheet } from 'react-native'
 import LottieView from 'lottie-react-native'
 import colors from '../config/colors'
 const ActivityIndicatorLottieView = ({visible = false}) => {
+    console.log(visible)
     if(!visible) return null
     return(
         <View style={styles.overlay}>

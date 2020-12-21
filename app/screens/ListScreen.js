@@ -28,7 +28,7 @@ const ListScreen = ({navigation}) => {
     useEffect(() => {
         // setLists(ListingApi.getPetList().then(data => setLists(data)))
         // console.log(lists, 'dat==================')
-        console.log(lists)
+        console.log(`${SERVER_URI}pets`)
         getPetList()
         // console.log(lists)
     }, [refreshing])

@@ -8,14 +8,14 @@ import { Alert } from 'react-native'
 export default useAuth = () => {
     const {user, setUser} = useContext(AuthContext)
     
-    const logIn = (authToken) => {
+    const logIn = async(authToken) => {
         const user = jwtDecode(authToken)
         setUser(user)
         authStorage.storeToken(authToken)
     }
-    const logOut = () => {
-        setUser(null)
-        authStorage.removeToken()
+    const logOut = async() => {
+        await setUser(null)
+        await authStorage.removeToken()
         if(user){
             Alert.alert('Logout', "Thank You for using An-Apps")
         }

@@ -24,21 +24,22 @@ const validationSchema = Yup.object().shape({
 });
 
 const LoginScreen = ({ navigation }) => {
-  const authContext = useContext(AuthContext);
+  const {loading, setLoading, toast, setToast, toastShow, setToastShow} = useContext(AuthContext)
   const auth = useAuth()
   const [visible, setVisible] = useState(false)
   
-  const loginSubmit = (values) => {
-      console.log(values)
-    axios
-      .post(`${SERVER_URI}user/login`, { email: values.email, password: values.password })
-      .then((log) => 
-      auth.logIn(log.data.token
-        ))
-      // .then(logs => authContext.setUser(logs))
-      .catch((err) => setVisible(true));
-    // console.log(values.email, values.password);
-  };
+  const loginSubmit = async(values) => {
+    try {
+      setLoading(true)
+      const response = await axios.post(`${SERVER_URI}user/login`, { email: values.email, password: values.password })  
+      auth.logIn(response.data.token)
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setVisible(true)
+    }
+  }
+      
   return (
     <Screens>
       <Image style={styles.image} source={require("../../assets/an-apps-logo.png")} />

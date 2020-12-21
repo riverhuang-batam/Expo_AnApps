@@ -16,7 +16,7 @@ import colors from "./app/config/colors";
 import authStorage from "./app/auth/storage";
 import { AppLoading } from "expo";
 import { AppearanceProvider, useColorScheme } from "react-native-appearance";
-
+import ActivityIndicatorLottieView from './app/components/ActivityIndicatorLottieView'
 
 const Stack = createStackNavigator();
 // const colorScheme = useColorScheme();
@@ -47,6 +47,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    // console.log(SERVER_URI)
     getCart();
   }, [setCartData, setAllPrice]);
 
@@ -78,6 +79,7 @@ const App = () => {
           <NavigationContainer>
             {user ? <AppNavigator /> : <AuthNavigator />}
           </NavigationContainer>
+      <ActivityIndicatorLottieView visible={loading}/>
     </AuthContext.Provider>
     </>
   );

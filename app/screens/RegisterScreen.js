@@ -20,27 +20,50 @@ const validationSchema = Yup.object().shape({
 const RegisterScreen = ({navigation}) => {
   const {loading, setLoading, toast, setToast, toastShow, setToastShow} = useContext(AuthContext)
 
-  const registerSubmit = (values) => {
-    // console.log(values);
-    // console.log("test");
-    axios
+  // const registerSubmit = (values) => {
+  //   // console.log(values);
+  //   // console.log("test");
+  //   console.log(`${SERVER_URI}user/signup`)
+  //   axios
+  //     .post(`${SERVER_URI}user/signup`, {
+  //       username: values.username,
+  //       email: values.email,
+  //       password: values.password,
+  //     })
+      
+  //     .then(() => {
+        
+  //       setLoading(true)
+        
+  //       console.log(loading)
+  //       // console.log(toastShow, '................................')
+  //     })
+  //     .then(() => 
+  //       setLoading(false)
+  //     )
+      
+  //     .catch((err) => console.log(err));
+  // };
+  const registerSubmit = async(values) => {
+    try{
+      setLoading(true)
+      const response = await axios
       .post(`${SERVER_URI}user/signup`, {
         username: values.username,
         email: values.email,
         password: values.password,
       })
-      .then(() => {
-        navigation.navigate("LoginScreen")
-        
-        Alert.alert('Register Success', 'Your registeration is success try to login')
-        // console.log(toast)
-        // console.log(toastShow, '................................')
-      })
-      .catch((err) => console.log(err));
+      await navigation.navigate("LoginScreen")
+      await setLoading(false)
+      Alert.alert('Register Success', 'Your registeration is success try to login')
+    }catch (err){
+      console.log(err)
+    }
+      
   };
   return (
     <>
-      {/* <ActivityIndicatorLottieView visible={true} /> */}
+      
     
     <Screens>
       <KeyboardAvoidingView
@@ -86,9 +109,6 @@ keyboardVerticalOffset={Platform.OS ===' ios' ? 0 : -85}
       </AppButton>
       </AppForm>
       </KeyboardAvoidingView>
-    <Button title="test" onPress={()=>{
-                       setToast(true)
-                    }}/>
     </Screens>
     </>
   );
